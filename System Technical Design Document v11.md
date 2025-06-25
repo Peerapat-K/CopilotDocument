@@ -970,8 +970,8 @@ graph TD
     end
     
     subgraph "External Backend Services"
-        APP_API[Application Backend (API)<br/>Canonical Workflow Storage]
-        CMS_API[Credential Management System (API)<br/>Secure Credential Storage]
+        APP_API[Application Backend API<br/>Canonical Workflow Storage]
+        CMS_API[Credential Management System API<br/>Secure Credential Storage]
     end
     
     subgraph "Processing Layer"
@@ -986,43 +986,43 @@ graph TD
     end
     
     %% Primary Data Flows
-    UI -.->|1. User Request + Language| ORC
-    ORC -.->|2. Load/Save Manifest State| STM
+    UI -.->|1\. User Request + Language| ORC
+    ORC -.->|2\. Load/Save Manifest State| STM
     
-    ORC -.->|3a. GET /workflows/{id}| APP_API
-    APP_API -.->|3b. Canonical Workflow (incl. version_id)| ORC
-    ORC -.->|3c. Hydrates Manifest| STM
+    ORC -.->|3a\. GET /workflows/{id}| APP_API
+    APP_API -.->|3b\. Canonical Workflow (incl. version_id)| ORC
+    ORC -.->|3c\. Hydrates Manifest| STM
 
-    ORC -.->|4. Semantic Search| NNR
-    ORC -.->|4. Semantic Search| CNR
+    ORC -.->|4\. Semantic Search| NNR
+    ORC -.->|4\. Semantic Search| CNR
     
-    ORC -.->|5a. Clarification/Parameter Request| UI
-    UI -.->|5b. User Response/Sample Data| ORC
+    ORC -.->|5a\. Clarification/Parameter Request| UI
+    UI -.->|5b\. User Response/Sample Data| ORC
 
-    ORC -.->|6a. Schema Inference Request<br>(Only for external sources)| SCS
-    SCS -.->|6b. Inferred Schema Result| ORC
+    ORC -.->|6a\. Schema Inference Request<br>(Only for external sources)| SCS
+    SCS -.->|6b\. Inferred Schema Result| ORC
 
-    ORC -.->|7a. GET /connections?type={type}| CMS_API
-    CMS_API -.->|7b. Available Connections| ORC
-    ORC -.->|7c. Guides User to CMS UI if missing| UI
+    ORC -.->|7a\. GET /connections?type={type}| CMS_API
+    CMS_API -.->|7b\. Available Connections| ORC
+    ORC -.->|7c\. Guides User to CMS UI if missing| UI
 
-    ORC -.->|8a. CTCA Request<br>(Fully Resolved Inputs)| CTCA
-    CTCA -.->|8b. Code Testing| SCS
-    SCS -.->|8c. Test Results| CTCA
-    CTCA -.->|9. Generated Code + Confirmed Schema| ORC
+    ORC -.->|8a\. CTCA Request<br>(Fully Resolved Inputs)| CTCA
+    CTCA -.->|8b\. Code Testing| SCS
+    SCS -.->|8c\. Test Results| CTCA
+    CTCA -.->|9\. Generated Code + Confirmed Schema| ORC
     
-    ORC -.->|10. Final WorkflowChangeProposal| UI
-    UI -.->|11. Displays Proposal| UI
-    UI -.->|12. User Approval/Rejection| ORC
+    ORC -.->|10\. Final WorkflowChangeProposal| UI
+    UI -.->|11\. Displays Proposal| UI
+    UI -.->|12\. User Approval/Rejection| ORC
 
-    ORC -.->|13. POST /workflows/{id}/apply-changes<br>(Commit Final Proposal)| APP_API
-    APP_API -.->|14. Success/new version_id| ORC
+    ORC -.->|13\. POST /workflows/{id}/apply-changes<br>(Commit Final Proposal)| APP_API
+    APP_API -.->|14\. Success/new version_id| ORC
 
-    ORC -.->|15. Assemble Final Plan| WDG
-    WDG -.->|16. Generated Definition| MEW
+    ORC -.->|15\. Assemble Final Plan| WDG
+    WDG -.->|16\. Generated Definition| MEW
     MEW -.->|Validation & Deployment| WE
-    WE -.->|18. GET /credentials/{id}| CMS_API
-    CMS_API -.->|19. Provides Credentials (Runtime)| WE
+    WE -.->|18\. GET /credentials/{id}| CMS_API
+    CMS_API -.->|19\. Provides Credentials (Runtime)| WE
     
     %% Feedback Loops
     STM -.->|Context Loading| ORC
