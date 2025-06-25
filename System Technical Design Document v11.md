@@ -161,56 +161,56 @@ graph TD
     end
 
     %% --- Connections ---
-    A -- "1. Natural Language Request / Feedback <br> (User Language Auto-detected/Set)" --> B
-    B -- "2. Load/Save Manifest State" --> D
+    A -- "1\. Natural Language Request / Feedback <br> (User Language Auto-detected/Set)" --> B
+    B -- "2\. Load/Save Manifest State" --> D
     
     %% SYNC & COMMIT FLOW (Problem #3, #4, #7)
-    B -- "3a. API Call: GET /workflows/{id} <br> (Load Canonical Workflow)" --> LD_API
-    LD_API -- "3b. Returns Latest Canonical Workflow <br> (incl. version_id)" --> B
-    B -- "3c. Hydrates Manifest <br> (incl. canonical_version_id)" --> D
-    B -- "4. Semantic Search <br> (Multilingual)" --> C & N
+    B -- "3a\. API Call: GET /workflows/{id} <br> (Load Canonical Workflow)" --> LD_API
+    LD_API -- "3b\. Returns Latest Canonical Workflow <br> (incl. version_id)" --> B
+    B -- "3c\. Hydrates Manifest <br> (incl. canonical_version_id)" --> D
+    B -- "4\. Semantic Search <br> (Multilingual)" --> C & N
     C & N -- "Node Schemas / Templates <br> (Multilingual Descs)" --> B
     D -- "Provides Current State/Schemas" --> B
 
     %% INTERACTIVE BUILD LOOP
-    B -- "5a. Clarification / Parameter Questions <br> (in User Language)" --> A
-    A -- "5b. User Answers / Feedback / Sample Data Source <br> (in User Language)" --> B
+    B -- "5a\. Clarification / Parameter Questions <br> (in User Language)" --> A
+    A -- "5b\. User Answers / Feedback / Sample Data Source <br> (in User Language)" --> B
     
     %% SCHEMA INFERENCE FLOW (Problem #1)
-    B -- "6a. Schema Inference Request <br> (ONLY for external data sources)" --> O
-    O -- "6b. Inferred Schema Result (incl. metadata & examples)" --> B
+    B -- "6a\. Schema Inference Request <br> (ONLY for external data sources)" --> O
+    O -- "6b\. Inferred Schema Result (incl. metadata & examples)" --> B
 
     %% CREDENTIAL CHECK FLOW (Problem #9)
-    B -- "7a. API Call: GET /connections?type={type} <br> (Check available credentials)" --> P_API
-    P_API -- "7b. Returns Available Connections" --> B
-    B -- "7c. Guides User to CMS UI if missing <br> (in User Language)" --> A
+    B -- "7a\. API Call: GET /connections?type={type} <br> (Check available credentials)" --> P_API
+    P_API -- "7b\. Returns Available Connections" --> B
+    B -- "7c\. Guides User to CMS UI if missing <br> (in User Language)" --> A
 
-    B -- "8a. Request Logic Generation <br> (Fully Resolved Input Contract, Expected Output Schema)" --> M
-    M -- "8b. Unit Test Code / Output Schema Confirmation" --> O
-    O -- "8c. Execution Result/Error / Confirmed Output Schema" --> M
-    M -- "9. Returns Configured Logic & CONFIRMED Output Schema" --> B
+    B -- "8a\. Request Logic Generation <br> (Fully Resolved Input Contract, Expected Output Schema)" --> M
+    M -- "8b\. Unit Test Code / Output Schema Confirmation" --> O
+    O -- "8c\. Execution Result/Error / Confirmed Output Schema" --> M
+    M -- "9\. Returns Configured Logic & CONFIRMED Output Schema" --> B
     
     %% FINAL PROPOSAL & COMMIT FLOW (Problem #4)
-    B -- "10. Generates FINAL <br> WorkflowChangeProposal <br> (from diff of Manifest vs Canonical)" --> UI
-    UI -- "11. Displays Proposed Changes / Seek Approval" --> F
-    F -- "12. User Approves Final Proposal <br> (in User Language)" --> B
-    B -- "13. API Call: POST /workflows/{id}/apply-changes <br> (Commit to Canonical Workflow)" --> LD_API
-    LD_API -- "14. Applies Changes & Returns new version_id" --> B
+    B -- "10\. Generates FINAL <br> WorkflowChangeProposal <br> (from diff of Manifest vs Canonical)" --> UI
+    UI -- "11\. Displays Proposed Changes / Seek Approval" --> F
+    F -- "12\. User Approves Final Proposal <br> (in User Language)" --> B
+    B -- "13\. API Call: POST /workflows/{id}/apply-changes <br> (Commit to Canonical Workflow)" --> LD_API
+    LD_API -- "14\. Applies Changes & Returns new version_id" --> B
 
-    B -- "15. Assembles Final Plan from Manifest" --> G
-    G -- "16. Generates Definition (using UUIDs)" --> H
+    B -- "15\. Assembles Final Plan from Manifest" --> G
+    G -- "16\. Generates Definition (using UUIDs)" --> H
     H --> I
     I -- "Validated Workflow" --> J
-    J -- "17. Executes Tasks" --> K
-    J -- "18. API Call: GET /credentials/{id} <br> (Runtime Credential Retrieval)" --> P_API
-    P_API -- "19. Provides Credentials (Runtime)" --> J
+    J -- "17\. Executes Tasks" --> K
+    J -- "18\. API Call: GET /credentials/{id} <br> (Runtime Credential Retrieval)" --> P_API
+    P_API -- "19\. Provides Credentials (Runtime)" --> J
 
     %% --- Feedback & Debugging Loops ---
     J -- "Execution Logs & Errors" --> B
     B -- "Contextual Troubleshooting <br> (in User Language)" --> A
     J -- "Execution Results & User Ratings" --> L
     M -- "Generated Code & User Ratings" --> L
-    L -- "20. Fine-Tuning Updates" --> B & M
+    L -- "20\. Fine-Tuning Updates" --> B & M
     J -- "Workflow Status / Events" --> LD_API
     B -- "Session State Updates" --> D
 
